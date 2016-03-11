@@ -24,7 +24,7 @@ class Article extends Component {
     render() {
         return (
             <div ref="container">
-                <a href = "#" onClick = {this.props.openArticle}>select</a>
+                <a href = "#" onClick = {this.props.openArticle}>select???</a>
                 {this.getTitle()}
                 {this.getBody()}
             </div>
