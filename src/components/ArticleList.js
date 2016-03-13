@@ -1,32 +1,31 @@
 import React, { Component, PropTypes } from 'react'
 import Article from './Article'
-import CommentList from './CommentList'
+import openOnlyOne from '../HOC/openOnlyOne'
 
-class ArticleList extends Component {
-    state = {
-        openArticleId: null
-    }
-    render() {
-        const articles = this.props.articles.map((article) =>
-            <li key={article.id}>
+const ArticleList=(props)=>{
+
+        const {handleOpen, isOpen}=props;
+
+        const articles = props.articles.map((article) =>
+
+            <div className='pure-u-1 pure-u-md-1-3' key={article.id}>
                 <Article article={article}
-                         openArticle = {this.openArticle(article.id)}
-                         isOpen = {article.id === this.state.openArticleId}/>
-            </li>
-        )
+                         openArticle = {handleOpen(article.id)}
+                         isOpen = {isOpen(article.id)}/>
+            </div>
+        );
+
         return (
-            <div>
-                <ul>
+            <div className='pure-g'>
+
                     {articles}
-                </ul>
+
+
             </div>
         )
     }
 
-    openArticle = (openArticleId) => (ev) => {
-        if (ev) ev.preventDefault()
-        this.setState({ openArticleId })
-    }
-}
 
-export default ArticleList
+
+
+export default openOnlyOne(ArticleList)
