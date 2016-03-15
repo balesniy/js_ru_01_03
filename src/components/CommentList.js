@@ -30,12 +30,8 @@ const CommentList = React.createClass({
         if (!this.props.isOpen) return null
         return <div>
             <input valueLink={this.linkState("comment")}/>
-            <a href = "#" onClick = {this.handleAdd}>add comment</a>
+            <a href = "#">add comment</a>
         </div>
-    },
-    handleAdd(ev){
-        ev.preventDefault()
-        this.props.addComment(this.state.comment)
     }
 })
 
