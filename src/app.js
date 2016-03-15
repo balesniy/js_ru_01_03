@@ -1,4 +1,4 @@
-import ArticleList from './components/ArticleListOld'
+import ArticleList from './components/ArticleList'
 import fixtures from './fixtures'
 import ReactDOM from 'react-dom'
 import React from 'react'
