@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
-import {articleStore} from '../stores'
+import { articleStore } from '../stores'
 
 class Container extends Component {
     constructor() {
