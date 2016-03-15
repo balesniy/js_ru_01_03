@@ -30,7 +30,7 @@ class Article extends Component {
         return (
             <div>
                 <p>{article.text}</p>
-                <CommentList ref= "comments" comments = {article.comments || []} />
+                <CommentList ref= "comments" comments = {article.getRelation('comments')} />
             </div>
         )
     }
