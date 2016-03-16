@@ -17,3 +17,4 @@ class JqueryComponent extends Component {
 }
 
 export default JqueryComponent
+
