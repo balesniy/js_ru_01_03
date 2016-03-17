@@ -38,7 +38,7 @@ class Article extends Component {
     addAC(comment){
         addComment({
             text:comment,
-            name:'Vasya',
+            name:'Anonymus',
             id:Date.now(),
             articleId:this.props.article.id
         })
