@@ -1,12 +1,12 @@
 import Article from './Article'
-import SimpleStore from './SimpleStore'
+import CommentStore from './Comments.js'
 import {articles, comments} from '../fixtures'
 
 const stores = {}
 
 Object.assign(stores, {
     articles: new Article(stores, articles),
-    comments: new SimpleStore(stores, comments)
+    comments: new CommentStore(stores, comments)
 })
 
 window.stores = stores
