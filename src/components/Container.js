@@ -1,19 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
 import { articleStore } from '../stores'
-import { loadAllArticles } from '../actions/articles'
 
 class Container extends Component {
     constructor() {
         super()
         this.state = {
-            articles: articleStore.getAll()
+            articles: articleStore.getOrLoadAll(),
+            loading: articleStore.loading
         }
     }
 
     componentDidMount() {
         articleStore.addChangeListener(this.articlesChanged)
-        loadAllArticles()
     }
 
     componentWillUnmount() {
@@ -22,14 +21,17 @@ class Container extends Component {
 
     articlesChanged =() => {
         this.setState({
-            articles: articleStore.getAll()
+            articles: articleStore.getOrLoadAll(),
+            loading: articleStore.loading
         })
     }
 
     render() {
+        const { articles, loading } = this.state
+        if (loading) return <h1>Loading...</h1>
         return (
             <div>
-                <ArticleList articles = {this.state.articles}/>
+                <ArticleList articles = {articles}/>
             </div>
         )
     }
