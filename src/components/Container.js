@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
 import { articleStore } from '../stores'
+import { loadAllArticles } from '../actions/articles'
 
 class Container extends Component {
     constructor() {
@@ -12,6 +13,7 @@ class Container extends Component {
 
     componentDidMount() {
         articleStore.addChangeListener(this.articlesChanged)
+        loadAllArticles()
     }
 
     componentWillUnmount() {
