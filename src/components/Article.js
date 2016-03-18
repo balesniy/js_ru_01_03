@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import {findDOMNode} from 'react-dom'
 import CommentList from './CommentList'
-import { deleteArticle } from '../actions/articles'
+import { deleteArticle, loadArticleById } from '../actions/articles'
 import { addComment } from '../actions/comments'
 
 class Article extends Component {
@@ -9,6 +9,13 @@ class Article extends Component {
         isOpen: PropTypes.bool,
         article: PropTypes.object.isRequired
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { article, isOpen } = nextProps
+        if (article.loaded || article.loading) return
+        if (isOpen && !this.props.isOpen) loadArticleById({id: article.id})
+    }
+
 
     render() {
         return (
@@ -28,12 +35,22 @@ class Article extends Component {
     getBody() {
         const { article, isOpen } = this.props
         if (!isOpen) return <noscript />
+        console.log('---', article);
         return (
             <div>
                 <p>{article.text}</p>
-                <CommentList ref= "comments" comments = {article.getRelation('comments')} addComment = {this.addComment}/>
+                {this.getCommentList()}
             </div>
         )
+    }
+
+    getCommentList() {
+        const { article } = this.props
+        if (!article.loaded) return null
+        return  <CommentList ref= "comments"
+                             comments = {article.getRelation('comments')}
+                             addComment = {this.addComment}/>
+
     }
 
     addComment = (comment) => {

@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher'
-import { DELETE_ARTICLE, ADD_COMMENT, _START, _SUCCESS, _FAIL, LOAD_ALL_ARTICLES } from '../actions/constants'
+import { DELETE_ARTICLE, ADD_COMMENT, _START, _SUCCESS, _FAIL, LOAD_ALL_ARTICLES, LOAD_ARTICLE_BY_ID } from '../actions/constants'
 import SimpleStore from './SimpleStore'
 import { loadAllArticles } from '../actions/articles'
 
@@ -35,6 +35,14 @@ class ArticleStore extends SimpleStore {
                     this.error = error
                     this.loaded = false
                     this.loading = false
+                    break;
+
+                case LOAD_ARTICLE_BY_ID + _START:
+                    this.getById(data.id).loading = true
+                    break;
+
+                case LOAD_ARTICLE_BY_ID + _SUCCESS:
+                    this.__update(response)
                     break;
 
                 default: return

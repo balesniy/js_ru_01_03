@@ -34,6 +34,10 @@ class SimpleStore extends EventEmitter {
         this.__items.push(new Model(data, this))
     }
 
+    __update = (data) => {
+        Object.assign(this.getById(data.id), data)
+    }
+
     __delete = (id) => {
         this.__items = this.__items.filter(item => item.id != id)
     }
