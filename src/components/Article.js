@@ -39,6 +39,7 @@ class Article extends Component {
         addComment({
             text:comment,
             name:'Anonymus',
+            //лучше генерацию id в action creator вынести
             id:Date.now(),
             articleId:this.props.article.id
         })
