@@ -22,6 +22,10 @@ class SimpleStore extends EventEmitter {
         this.removeListener('CHANGE_EVENT', callback)
     }
 
+    getSorted() {
+        return this.getAll().sort((a,b) => a.id - b.id)
+    }
+
     getAll() {
         return this.__items.slice()
     }

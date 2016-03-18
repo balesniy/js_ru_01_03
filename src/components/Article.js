@@ -13,6 +13,7 @@ class Article extends Component {
     componentWillReceiveProps(nextProps) {
         const { article, isOpen } = nextProps
         if (article.loaded || article.loading) return
+
         if (isOpen && !this.props.isOpen) loadArticleById({id: article.id})
     }
 
@@ -35,7 +36,7 @@ class Article extends Component {
     getBody() {
         const { article, isOpen } = this.props
         if (!isOpen) return <noscript />
-        console.log('---', article);
+        if (article.loading) return <h3>Loading article</h3>
         return (
             <div>
                 <p>{article.text}</p>
@@ -46,9 +47,10 @@ class Article extends Component {
 
     getCommentList() {
         const { article } = this.props
-        if (!article.loaded) return null
+        const comments = article.getRelation('comments')
+        if (comments.includes(undefined)) return <h3>comments: {comments.length}</h3>
         return  <CommentList ref= "comments"
-                             comments = {article.getRelation('comments')}
+                             comments = {comments}
                              addComment = {this.addComment}/>
 
     }

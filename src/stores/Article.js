@@ -42,7 +42,7 @@ class ArticleStore extends SimpleStore {
                     break;
 
                 case LOAD_ARTICLE_BY_ID + _SUCCESS:
-                    this.__update(response)
+                    this.__update({...response, loading: false, loaded: true})
                     break;
 
                 default: return
