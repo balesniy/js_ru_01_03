@@ -15,7 +15,7 @@ class ArticleStore extends SimpleStore {
                     this.emitChange()
                     break;
                 case ADD_COMMENT:
-
+                    //у нас есть .getById метод, а комментов может еще не быть, приведет к ексепшену
                     this.__items.filter(item=>item.id==data.articleId)[0].comments.push(data.id)
                     this.emitChange()
                     break;
