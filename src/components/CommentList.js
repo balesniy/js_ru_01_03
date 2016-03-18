@@ -6,7 +6,8 @@ import linkedState from 'react-addons-linked-state-mixin'
 const CommentList = React.createClass({
     mixins: [linkedState],
     propTypes: {
-        comments: PropTypes.array
+        comments: PropTypes.array,
+        addComment: PropTypes.func.isRequired
     },
     getInitialState() {
         return {
@@ -30,8 +31,15 @@ const CommentList = React.createClass({
         if (!this.props.isOpen) return null
         return <div>
             <input valueLink={this.linkState("comment")}/>
-            <a href = "#">add comment</a>
+            <a href = "#" onClick = {this.addComment}>add comment</a>
         </div>
+    },
+    addComment(ev) {
+        ev.preventDefault()
+        this.props.addComment(this.state.comment)
+        this.setState({
+            comment: ''
+        })
     }
 })
 

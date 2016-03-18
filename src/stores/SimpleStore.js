@@ -7,6 +7,7 @@ class SimpleStore extends EventEmitter {
         this.__stores = stores
         this.__items = []
         if (initialState) initialState.forEach(this.__add)
+        this.__incrementalId = Math.max(...this.__items.map(el => el.id)) + 1000
     }
 
     addChangeListener(callback) {
@@ -35,6 +36,14 @@ class SimpleStore extends EventEmitter {
 
     __delete = (id) => {
         this.__items = this.__items.filter(item => item.id != id)
+    }
+
+    generateId() {
+        return ++this.__incrementalId
+    }
+
+    getCurrentId() {
+        return this.__incrementalId
     }
 }
 

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import {findDOMNode} from 'react-dom'
 import CommentList from './CommentList'
 import { deleteArticle } from '../actions/articles'
+import { addComment } from '../actions/comments'
 
 class Article extends Component {
     static propTypes = {
@@ -30,10 +31,15 @@ class Article extends Component {
         return (
             <div>
                 <p>{article.text}</p>
-                <CommentList ref= "comments" comments = {article.getRelation('comments')} />
+                <CommentList ref= "comments" comments = {article.getRelation('comments')} addComment = {this.addComment}/>
             </div>
         )
     }
+
+    addComment = (comment) => {
+        addComment(comment, this.props.article.id)
+    }
+
     getTitle() {
         const { article: { title }, openArticle  } = this.props
         return  (
