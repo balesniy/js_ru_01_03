@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 
 export default (props)=> {
 
-    const {comment:{name,text}}=props;
+    const {comment:{user,text}}=props;
         return (
             <div className="content">
-                <div className="post-meta">{name}</div>
+                <div className="post-meta">{user}</div>
                 <div className="post post-description">{text}</div>
             </div>
         )
