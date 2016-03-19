@@ -31,7 +31,7 @@ class SimpleStore extends EventEmitter {
     }
 
     getById = (id) => {
-        return this.__items.filter(item => item.id == id)[0]
+        return this.__items.find(item => item.id == id)
     }
 
     __add = (data) => {
