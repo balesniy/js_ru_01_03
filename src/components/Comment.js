@@ -10,6 +10,6 @@ export default (props)=> {
                 <div className="post post-description">{text}</div>
             </div>
         )
-    }
+}
 
 

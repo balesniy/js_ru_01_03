@@ -25,9 +25,8 @@ class Article extends Component {
         const { article, isOpen, openArticle, article:{comments,title} } = this.props
         return (
             <div ref="container">
-                <a href = "#" onClick = {this.handleDelete}>delete</a>
 
-                <h3 onClick={openArticle}>{title}</h3>
+                <h3 onClick={openArticle}>{title} <a href = "#" onClick = {this.handleDelete}>delete</a> </h3>
 
                 <Body article={article}
                       isOpen={isOpen}
