@@ -13,6 +13,7 @@ class Comment extends SimpleStore {
                 case ADD_COMMENT:
                     this.__add({
                         text: data.comment,
+                        article: data.articleId,
                         id: this.generateId()
                     })
                     break;
@@ -22,14 +23,20 @@ class Comment extends SimpleStore {
                     break;
 
                 case LOAD_COMMENTS + _SUCCESS:
-                    this.loading=false
                     response.forEach(this.__add)
+                    this.loading=false
                     break;
 
                 default: return
             }
             this.emitChange()
         })
+    }
+    getByArticleId(id){
+        return this.__items.filter(item=>item.article==id)
+    }
+    getAllById(id){
+        return this.__items.filter(item=>id.includes(item.id))
     }
 }
 

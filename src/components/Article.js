@@ -3,17 +3,10 @@ import {findDOMNode} from 'react-dom'
 import CommentList from './CommentList'
 import { deleteArticle, loadArticleById } from '../actions/articles'
 import { addComment } from '../actions/comments'
-import { commentStore } from '../stores'
+
 
 class Article extends Component {
 
-    constructor(){
-        super()
-        this.state = {
-            comments: commentStore.getAll(),
-            loading: commentStore.loading
-        }
-    }
 
     static propTypes = {
         isOpen: PropTypes.bool,
@@ -27,23 +20,6 @@ class Article extends Component {
 
         if (isOpen && !this.props.isOpen) loadArticleById({id: article.id})
     }
-
-    componentDidMount() {
-        commentStore.addChangeListener(this.commentsChanged)
-    }
-
-    componentWillUnmount() {
-        commentStore.removeChangeListener(this.commentsChanged)
-    }
-
-
-    commentsChanged =()=>  {
-        this.setState({
-            comments: commentStore.getAll(),
-            loading: commentStore.loading
-        })
-    }
-
 
 
     render() {
@@ -74,12 +50,10 @@ class Article extends Component {
     }
 
     getCommentList() {
-        const { article,comments } = this.props
-        //const comments = article.getRelation('comments')
-        //if (comments.includes(undefined)) return <h3>comments: {comments.length}</h3>
+        const { article,article:{comments} } = this.props
+
         return  <CommentList ref= "comments"
                              article={article}
-                             loading={this.state.loading}
                              comments = {comments}
                              addComment = {this.addComment}/>
 

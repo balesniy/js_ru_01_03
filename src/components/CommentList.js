@@ -3,7 +3,7 @@ import Comment from './Comment'
 import toggleOpen from '../HOC/toggleOpen'
 import linkedState from 'react-addons-linked-state-mixin'
 import {loadComments} from '../actions/comments.js'
-
+import { commentStore } from '../stores'
 
 const CommentList = React.createClass({
     mixins: [linkedState],
@@ -14,20 +14,35 @@ const CommentList = React.createClass({
 
     getInitialState() {
         return {
-            comment: ''
+            comment: '',
+            loading:false,
+            comments: commentStore.getAllById(this.props.comments)
         }
     },
 
 
-
     componentWillReceiveProps(nextProps){
-        if (!nextProps.isOpen || this.props.loading|| this.props.isOpen) return
+        if (this.state.loading) return
 
-        const comments = this.props.article.getRelation('comments');
-        if (comments.includes(undefined)) loadComments(this.props.article.id);
+        if (!this.state.comments.length && nextProps.isOpen) loadComments(this.props.article.id);
+    },
+
+    componentDidMount() {
+        commentStore.addChangeListener(this.commentsChanged)
+    },
+
+    componentWillUnmount() {
+        commentStore.removeChangeListener(this.commentsChanged)
     },
 
 
+    commentsChanged ()  {
+
+        this.setState({
+            comments: commentStore.getByArticleId(this.props.article.id),
+            loading: commentStore.loading
+        })
+    },
 
 
     render() {
@@ -46,12 +61,13 @@ const CommentList = React.createClass({
     },
     getCommentItems(){
 
-        const comments = this.props.article.getRelation('comments')
-        if (comments.includes(undefined)) {
 
-            return <h3>comments: {comments.length}</h3>
+        if (this.state.loading) {
+
+            return <h3>Loading {this.props.comments.length} comments...</h3>
         }
 
+        const comments = this.state.comments
         return comments.map((comment) => <li key={comment.id}><Comment comment = {comment}/></li>)
     },
 
