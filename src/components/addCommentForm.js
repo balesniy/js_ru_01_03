@@ -40,8 +40,7 @@ export default React.createClass( {
         this.props.submit({
             text:this.state.currentText,
             name:this.state.currentName,
-            checked:this.state.checked,
-            id:Date.now()
+            checked:this.state.checked
         })
 
         this.setState(this.getInitialState())

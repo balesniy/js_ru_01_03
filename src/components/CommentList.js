@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import Comment from './Comment'
+import AddCommentForm from './addCommentForm.js'
 import toggleOpen from '../HOC/toggleOpen'
-import linkedState from 'react-addons-linked-state-mixin'
 import {loadComments} from '../actions/comments.js'
 import { commentStore } from '../stores'
 
 const CommentList = React.createClass({
-    mixins: [linkedState],
+
     propTypes: {
         comments: PropTypes.array,
         addComment: PropTypes.func.isRequired
@@ -24,7 +24,10 @@ const CommentList = React.createClass({
     componentWillReceiveProps(nextProps){
         if (this.state.loading) return
 
-        if (!this.state.comments.length && nextProps.isOpen) loadComments(this.props.article.id);
+        const { article } = this.props
+        const commentsText = article.getRelation('comments')
+
+        if (commentsText.includes(undefined) && nextProps.isOpen) loadComments(article.id);
     },
 
     componentDidMount() {
@@ -55,7 +58,8 @@ const CommentList = React.createClass({
             <div>
                 <a href = "#" onClick = {toggleOpen}>{actionText}</a>
                 <ul>{isOpen ? this.getCommentItems() : null}</ul>
-                {this.getInput()}
+
+                <AddCommentForm submit={this.props.addComment}/>
             </div>
         )
     },
@@ -69,21 +73,6 @@ const CommentList = React.createClass({
 
         const comments = this.state.comments
         return comments.map((comment) => <li key={comment.id}><Comment comment = {comment}/></li>)
-    },
-
-    getInput() {
-        if (!this.props.isOpen) return null
-        return <div>
-            <input valueLink={this.linkState("comment")}/>
-            <a href = "#" onClick = {this.addComment}>add comment</a>
-        </div>
-    },
-    addComment(ev) {
-        ev.preventDefault()
-        this.props.addComment(this.state.comment)
-        this.setState({
-            comment: ''
-        })
     }
 })
 

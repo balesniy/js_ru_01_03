@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import {findDOMNode} from 'react-dom'
-import CommentList from './CommentList'
+import Body from './Body.js'
 import { deleteArticle, loadArticleById } from '../actions/articles'
 import { addComment } from '../actions/comments'
 
@@ -23,11 +22,17 @@ class Article extends Component {
 
 
     render() {
+        const { article, isOpen, openArticle, article:{comments,title} } = this.props
         return (
             <div ref="container">
                 <a href = "#" onClick = {this.handleDelete}>delete</a>
-                {this.getTitle()}
-                {this.getBody()}
+
+                <h3 onClick={openArticle}>{title}</h3>
+
+                <Body article={article}
+                      isOpen={isOpen}
+                      comments={comments}
+                      addComment = {this.addComment}/>
             </div>
         )
     }
@@ -37,40 +42,10 @@ class Article extends Component {
         deleteArticle(this.props.article.id)
     }
 
-    getBody() {
-        const { article, isOpen } = this.props
-        if (!isOpen) return <noscript />
-        if (article.loading) return <h3>Loading article</h3>
-        return (
-            <div>
-                <p>{article.text}</p>
-                {this.getCommentList()}
-            </div>
-        )
-    }
-
-    getCommentList() {
-        const { article,article:{comments} } = this.props
-
-        return  <CommentList ref= "comments"
-                             article={article}
-                             comments = {comments}
-                             addComment = {this.addComment}/>
-
-    }
-
     addComment = (comment) => {
         addComment(comment, this.props.article.id)
     }
 
-    getTitle() {
-        const { article: { title }, openArticle  } = this.props
-        return  (
-            <h3 onClick={openArticle}>
-                {title}
-            </h3>
-        )
-    }
 }
 
 export default Article
