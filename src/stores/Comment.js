@@ -20,6 +20,7 @@ class Comment extends SimpleStore {
                     break;
 
                 case LOAD_COMMENTS + _START:
+                    //подходит если все комменті сразу тянуть, так нужно какие-то id  хранить
                     this.loading = true
                     break;
 
