@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher'
-import { DELETE_ARTICLE, ADD_COMMENT, _START, _SUCCESS, _FAIL, LOAD_ALL_ARTICLES, LOAD_ARTICLE_BY_ID } from '../actions/constants'
+import { DELETE_ARTICLE, ADD_COMMENT, LOAD_COMMENTS, _START, _SUCCESS, _FAIL, LOAD_ALL_ARTICLES, LOAD_ARTICLE_BY_ID } from '../actions/constants'
 import SimpleStore from './SimpleStore'
 import { loadAllArticles, loadArticleById } from '../actions/articles'
 
@@ -43,6 +43,16 @@ class ArticleStore extends SimpleStore {
 
                 case LOAD_ARTICLE_BY_ID + _SUCCESS:
                     this.__update({...response, loading: false, loaded: true})
+                    break;
+
+                case LOAD_COMMENTS + _START:
+                    this.getById(data).comments.loading = true
+                    break;
+
+                case LOAD_COMMENTS + _SUCCESS:
+                    AppDispatcher.waitFor([stores.comments.dispatchToken])
+                    this.getById(data).comments.loading=false
+                    this.getById(data).comments.loaded=true
                     break;
 
                 default: return

@@ -3,7 +3,7 @@ import Body from './Body.js'
 import { deleteArticle, loadArticleById } from '../actions/articles'
 
 
-const Article =(props)=> {
+export default (props)=> {
 
         const { article, isOpen, openArticle, article:{comments,title} } = props;
 
@@ -29,6 +29,4 @@ const Article =(props)=> {
             </div>
         )
 
-};
-
-export default Article
+}
