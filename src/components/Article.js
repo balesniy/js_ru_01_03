@@ -1,50 +1,34 @@
 import React, { Component, PropTypes } from 'react'
 import Body from './Body.js'
 import { deleteArticle, loadArticleById } from '../actions/articles'
-import { addComment } from '../actions/comments'
 
 
-class Article extends Component {
+const Article =(props)=> {
 
+        const { article, isOpen, openArticle, article:{comments,title} } = props;
 
-    static propTypes = {
-        isOpen: PropTypes.bool,
-        article: PropTypes.object.isRequired
+        const handleDelete = (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            deleteArticle(article.id)
+        };
 
-    }
+        const handleOpen=()=>{
+            if (!article.loaded && !article.loading) loadArticleById({id:article.id})
+            openArticle()
+        };
 
-    componentWillReceiveProps(nextProps) {
-        const { article, isOpen } = nextProps
-        if (article.loaded || article.loading) return
-
-        if (isOpen && !this.props.isOpen) loadArticleById({id: article.id})
-    }
-
-
-    render() {
-        const { article, isOpen, openArticle, article:{comments,title} } = this.props
         return (
-            <div ref="container">
+            <div>
 
-                <h3 onClick={openArticle}>{title} <a href = "#" onClick = {this.handleDelete}>delete</a> </h3>
-
-                <Body article={article}
-                      isOpen={isOpen}
-                      comments={comments}
-                      addComment = {this.addComment}/>
+                <h3 onClick={handleOpen}>{title} <a href = "#" onClick = {handleDelete}>delete</a> </h3>
+                {!isOpen ? null :
+                    <Body article={article}
+                          comments={comments}/>
+                }
             </div>
         )
-    }
 
-    handleDelete = (ev) => {
-        ev.preventDefault()
-        deleteArticle(this.props.article.id)
-    }
-
-    addComment = (comment) => {
-        addComment(comment, this.props.article.id)
-    }
-
-}
+};
 
 export default Article

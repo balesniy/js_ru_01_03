@@ -1,19 +1,23 @@
 import React from 'react'
 import CommentList from './CommentList'
+import { addComment } from '../actions/comments'
+
 
 
 export default (props) => {
-    const { article, isOpen, article:{comments}, addComment } = props
-    if (!isOpen) return <noscript />
-    if (article.loading) return <h3>Loading article</h3>
+
+    const { id, comments, loading, text} = props.article;
+
+    if (loading) return <h3>Loading article</h3>
+
     return (
         <div>
-            <p>{article.text}</p>
+            <p>{text}</p>
 
             <CommentList
-                         article={article}
+                         article={props.article}
                          comments = {comments}
-                         addComment = {addComment}/>
+                         addComment = {(comment) => addComment(comment, id)}/>
 
 
         </div>

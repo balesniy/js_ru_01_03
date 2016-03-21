@@ -51,7 +51,7 @@ const CommentList = React.createClass({
     render() {
         const { isOpen,toggleOpen } = this.props
 
-        const actionText = isOpen ? 'hide comments' : 'show comments'
+        const actionText = isOpen ? 'hide comments' : 'show comments';
 
 
         return (
@@ -63,6 +63,7 @@ const CommentList = React.createClass({
             </div>
         )
     },
+
     getCommentItems(){
 
 
@@ -71,9 +72,9 @@ const CommentList = React.createClass({
             return <h3>Loading {this.props.comments.length} comments...</h3>
         }
 
-        const comments = this.state.comments
+        const comments = this.state.comments;
         return comments.map((comment) => <li key={comment.id}><Comment comment = {comment}/></li>)
     }
-})
+});
 
 export default toggleOpen(CommentList)

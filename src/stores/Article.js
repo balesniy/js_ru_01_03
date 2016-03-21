@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher'
 import { DELETE_ARTICLE, ADD_COMMENT, _START, _SUCCESS, _FAIL, LOAD_ALL_ARTICLES, LOAD_ARTICLE_BY_ID } from '../actions/constants'
 import SimpleStore from './SimpleStore'
-import { loadAllArticles } from '../actions/articles'
+import { loadAllArticles, loadArticleById } from '../actions/articles'
 
 class ArticleStore extends SimpleStore {
     constructor(stores, initialState) {
@@ -54,6 +54,10 @@ class ArticleStore extends SimpleStore {
     getOrLoadAll() {
         if (!this.loaded && !this.loading) loadAllArticles()
         return this.getAll()
+    }
+    getOrLoadById(id) {
+        if (!this.getById(id).loaded && !this.getById(id).loading) loadArticleById({id})
+        return this.getById(id)
     }
 }
 
