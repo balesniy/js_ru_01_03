@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { articleStore } from '../stores'
 import Article from '../components/Article'
-import { loadArticleById } from '../actions/articles'
+
 
 class ArticlePage extends Component {
     static propTypes = {
@@ -10,12 +10,11 @@ class ArticlePage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            article: articleStore.getById(props.params.id)
+            article: articleStore.getOrLoadById(props.params.id)
         }
     }
 
     componentDidMount() {
-        this.checkAndLoad(this.state.article)
         articleStore.addChangeListener(this.articlesChanged)
     }
 
@@ -24,18 +23,15 @@ class ArticlePage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.checkAndLoad(articleStore.getById(nextProps.params.id))
+
         this.articlesChanged(nextProps)
     }
 
-    checkAndLoad = (article) => {
-        if (!article.loaded && !article.loading) setTimeout(() => loadArticleById({id: article.id}), 0)
-    }
 
-    articlesChanged =(props) => {
-        const { id } = (props || this.props).params
+    articlesChanged =(props=this.props) => {
+        const { id } = props.params
         this.setState({
-            article: articleStore.getById(id)
+            article: articleStore.getOrLoadById(id)
         })
     }
 
@@ -43,7 +39,9 @@ class ArticlePage extends Component {
         return (
             <div>
                 article: {this.props.params.id}
-                <Article article={this.state.article} />
+                {this.state.article?
+                <Article article={this.state.article} />:
+                <div>No such article at store</div> }
             </div>
         )
     }

@@ -1,16 +1,22 @@
 import React, { Component, PropTypes } from 'react'
-import Article from './Article'
-import oneOpen from '../HOC/oneOpen'
+import { deleteArticle, loadArticleById } from '../actions/articles'
+import { Link } from 'react-router'
+
 
 const ArticleList = (props) =>{
 
-        const { articles, isItemOpen, openItem } =props;
+        const { articles} =props;
+        const handleDelete = (id) =>(ev)=> {
+            ev.preventDefault();
+            deleteArticle(id)
+        };
 
         const articleItems = articles.map((article) =>
             <li key={article.id}>
-                <Article article={article}
-                         openArticle = {openItem(article.id)}
-                         isOpen = {isItemOpen(article.id)}/>
+
+                <Link activeStyle={{ color: 'red' }} to={`/articles/${article.id}`}>{article.title}</Link>
+
+                <a style={{marginLeft: 20, color: 'green'}} href = "#" onClick = {handleDelete(article.id)}>delete</a>
             </li>
         );
         return (
@@ -22,4 +28,4 @@ const ArticleList = (props) =>{
         )
 };
 
-export default oneOpen(ArticleList)
+export default ArticleList

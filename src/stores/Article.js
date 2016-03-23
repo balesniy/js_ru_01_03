@@ -66,7 +66,8 @@ class ArticleStore extends SimpleStore {
         return this.getAll()
     }
     getOrLoadById(id) {
-        if (!this.getById(id).loaded && !this.getById(id).loading) loadArticleById({id})
+        if (!this.getById(id)) return
+        if (!this.getById(id).loaded && !this.getById(id).loading) setTimeout(()=>loadArticleById({id}),0)
         return this.getById(id)
     }
 }

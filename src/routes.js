@@ -3,6 +3,7 @@ import { Router, Route, browserHistory, hashHistory } from 'react-router'
 import App from './containers/App'
 import Articles from './containers/Articles'
 import ArticlePage from './containers/ArticlePage'
+import CommentsPage from './containers/CommentsPage'
 import NewArticle from './containers/NewArticle'
 
 export default (
@@ -12,6 +13,7 @@ export default (
                 <Route path = "new" component = {NewArticle} />
                 <Route path = ":id" component = {ArticlePage} />
             </Route>
+            <Route path="/comments/:page" component={CommentsPage}/>
         </Route>
     </Router>
 )

@@ -12,7 +12,7 @@ export default (props) => {
 
     return (
         <div>
-            <p>{text}</p>
+            <p>{text || 'unloaded article body'}</p>
 
             <CommentList
                          article={props.article}

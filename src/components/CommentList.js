@@ -21,18 +21,24 @@ const CommentList = (props)=> {
                 return <h3>Loading {comments.length} comments...</h3>
             }
 
-            return article.getRelation('comments').map((comment) =>
-                <li key={comment.id}>
-                    <Comment comment = {comment}/>
-                </li>)
+            return (
+                <div>
+                    <ul>
+                        {article.getRelation('comments').map((comment) =>
+                        <li key={comment.id}>
+                            <Comment comment = {comment}/>
+                        </li>)}
+                    </ul>
+                    <AddCommentForm submit={props.addComment}/>
+                </div>
+            )
         };
 
         return (
             <div>
                 <a href = "#" onClick = {handleOpen}>{actionText}</a>
-                <ul>{isOpen ? getCommentItems() : null}</ul>
+                {isOpen ? getCommentItems() : null}
 
-                <AddCommentForm submit={props.addComment}/>
             </div>
         )
 

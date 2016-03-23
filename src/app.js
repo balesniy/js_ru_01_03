@@ -1,5 +1,5 @@
-import Container from './components/Container'
+import routes from './routes'
 import ReactDOM from 'react-dom'
 import React from 'react'
 
-ReactDOM.render(<Container />, document.getElementById('container'))
+ReactDOM.render(routes, document.getElementById('container'))
