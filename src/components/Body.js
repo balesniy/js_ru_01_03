@@ -1,12 +1,12 @@
 import React from 'react'
 import CommentList from './CommentList'
-import { addComment } from '../actions/comments'
+import { addComment, loadComments } from '../actions/comments'
 
 
 
 export default (props) => {
 
-    const { id, comments, loading, text} = props.article;
+    const { id, loading, text} = props.article;
 
     if (loading) return <h3>Loading article</h3>
 
@@ -16,7 +16,7 @@ export default (props) => {
 
             <CommentList
                          article={props.article}
-                         comments = {comments}
+                         loadComments={()=>loadComments(id)}
                          addComment = {(comment) => addComment(comment, id)}/>
 
 

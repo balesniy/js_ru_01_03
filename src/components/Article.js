@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import Body from './Body.js'
 import { deleteArticle, loadArticleById } from '../actions/articles'
 
 
 export default (props)=> {
 
-        const { article, isOpen, openArticle, article:{comments,title} } = props;
+        const { article, isOpen, openArticle, article:{title} } = props;
 
         const handleDelete = (ev) => {
             ev.preventDefault();
@@ -23,8 +23,7 @@ export default (props)=> {
 
                 <h3 onClick={handleOpen}>{title} <a href = "#" onClick = {handleDelete}>delete</a> </h3>
                 {!isOpen ? null :
-                    <Body article={article}
-                          comments={comments}/>
+                    <Body article={article}/>
                 }
             </div>
         )

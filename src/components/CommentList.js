@@ -2,15 +2,15 @@ import React from 'react'
 import Comment from './Comment'
 import AddCommentForm from './addCommentForm.js'
 import toggleOpen from '../HOC/toggleOpen'
-import {loadComments} from '../actions/comments.js'
+
 
 const CommentList = (props)=> {
 
-    const { isOpen, toggleOpen, article, article: {comments,id} } = props;
+    const { isOpen, toggleOpen, loadComments, article, article: {comments} } = props;
     const actionText = isOpen ? 'hide comments' : 'show comments';
 
         const handleOpen=()=>{
-            if(!comments.loading && !comments.loaded) loadComments(id);
+            if(!comments.loading && !comments.loaded) loadComments();
             toggleOpen()
         };
 
