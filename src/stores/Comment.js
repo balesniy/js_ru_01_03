@@ -56,7 +56,7 @@ class Comment extends SimpleStore {
 
     getByPage(page){
         const int=[...new Array(10)].map((_,i)=>page*10+i+1).filter(i=>i<=this.total);
-        console.log(int,page,this.total)
+
         if(!int.every(this.getById)) loadCommentsPage (page)
 
         return int.map(this.getById)
