@@ -10,10 +10,10 @@ export default (
     <Router history = {browserHistory}>
         <Route path="/" component = {App}>
             <Route path ="/articles" component = {Articles}>
-                <Route path = "new" component = {NewArticle} />
                 <Route path = ":id" component = {ArticlePage} />
             </Route>
             <Route path="/comments/:page" component={CommentsPage}/>
+            <Route path = "feed" component = {NewArticle} />
         </Route>
     </Router>
 )
