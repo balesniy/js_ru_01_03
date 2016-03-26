@@ -9,7 +9,7 @@ export function loadCitiesByIds(ids) {
     return $.getJSON(`https://api.vk.com/method/database.getCitiesById?city_ids=${ids.join(',')}&callback=?`)
 }
 
-export function geoCode(name) {
+export function geoCode({name}) {
     return $.getJSON(`http://geocode-maps.yandex.ru/1.x/?format=json&geocode=${name}&results=1&callback=?`)
 }
 
