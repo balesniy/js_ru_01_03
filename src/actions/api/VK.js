@@ -16,3 +16,7 @@ export function geoCode({name}) {
 export function loadFeedsByPlace(q) {
     return $.getJSON(`https://api.vk.com/method/newsfeed.search?extended=1&fields=city,place,status,contacts&count=200&q=${q.q}&longitude=${q.long}&latitude=${q.lat}&callback=?`)
 }
+
+export function loadPhotosByQuerry(q) {
+    return $.getJSON(`https://api.vk.com/method/photos.search?count=20&q=${q}&callback=?`)
+}

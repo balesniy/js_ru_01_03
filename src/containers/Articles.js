@@ -7,8 +7,22 @@ class Articles extends Component {
         super()
         this.state = {
             articles: articleStore.getOrLoadAll(),
-            loading: articleStore.loading
+            loading: articleStore.loading,
+            name: ''
         }
+    }
+
+    static childContextTypes = {
+        user: PropTypes.string
+    }
+    getChildContext() {
+        return {
+            user: this.state.user
+        }
+    }
+    static contextTypes = {
+        router: PropTypes.object,
+        language: PropTypes.object
     }
 
     componentDidMount() {
@@ -31,10 +45,30 @@ class Articles extends Component {
         if (loading) return <h1>Loading...</h1>
         return (
             <div>
+                <input value={this.state.name} onChange = {this.changeName}/>
+                <a href="#" onClick = {this.signIn} >{this.context.language.SignIn}</a>
+                <h3 onClick = {this.goToNewArticle}>{this.context.language.NewArticle}</h3>
                 <ArticleList articles = {articles}/>
                 {this.props.children}
             </div>
         )
+    }
+
+    changeName = (ev) => {
+        this.setState({
+            name: ev.target.value
+        })
+    }
+
+    signIn = (ev) => {
+        ev.preventDefault()
+        this.setState({
+            user: this.state.name
+        })
+    }
+    goToNewArticle = () => {
+//        this.context.router.push('/articles/new')
+        this.context.router.replace('/articles/new')
     }
 }
 

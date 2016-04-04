@@ -1,15 +1,19 @@
-import React, {Component as ReactComponent} from 'react'
+import React, {Component as ReactComponent, PropTypes} from 'react'
 import LinkedStateMixin from 'react-addons-linked-state-mixin'
 
 export default React.createClass( {
 
     mixins: [LinkedStateMixin],
 
+    contextTypes: {
+        user: PropTypes.string,
+        language: PropTypes.object
+    },
+
+
     getInitialState() {
         return {
-            currentText: '',
-            currentName: '',
-            checked: false
+            currentText: ''
         }
     },
 
@@ -20,17 +24,13 @@ export default React.createClass( {
                     <fieldset>
                         <legend>Add comment</legend>
 
-                        <label htmlFor="name">Name</label>
-                        <input valueLink={this.linkState('currentName')} name="name" type="text" placeholder="Your name"/>
-
                             <label htmlFor="comment">Comment</label>
-                            <textarea valueLink={this.linkState('currentText')} name="comment" type="text" placeholder="Say something"/>
+                            <textarea valueLink={this.linkState('currentText')}
+                                      name="comment" type="text"
+                                      placeholder="Say something"/>
 
-                                <label htmlFor="remember" className="pure-checkbox">
-                                    <input checkedLink={this.linkState('checked')} name="remember" type="checkbox"/> Remember me
-                                </label>
-
-                        <button onClick={this.handleClick} className="pure-button pure-button-primary">Post</button>
+                        <button onClick={this.handleClick}
+                                className="pure-button pure-button-primary">{this.context.language.Post}</button>
                     </fieldset>
             </div>
 
@@ -39,8 +39,7 @@ export default React.createClass( {
     handleClick(){
         this.props.submit({
             text:this.state.currentText,
-            name:this.state.currentName,
-            checked:this.state.checked
+            name:this.context.user
         })
 
         this.setState(this.getInitialState())

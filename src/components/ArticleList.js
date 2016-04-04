@@ -3,7 +3,7 @@ import { deleteArticle, loadArticleById } from '../actions/articles'
 import { Link } from 'react-router'
 
 
-const ArticleList = (props) =>{
+const ArticleList = (props,context) =>{
 
         const { articles} =props;
         const handleDelete = (id) =>(ev)=> {
@@ -16,7 +16,9 @@ const ArticleList = (props) =>{
 
                 <Link activeStyle={{ color: 'red' }} to={`/articles/${article.id}`}>{article.title}</Link>
 
-                <a style={{marginLeft: 20, color: 'green'}} href = "#" onClick = {handleDelete(article.id)}>delete</a>
+                <a style={{marginLeft: 20, color: 'green'}} href = "#"
+                   onClick = {handleDelete(article.id)}
+                    >{context.language.Delete}</a>
             </li>
         );
         return (
@@ -27,5 +29,7 @@ const ArticleList = (props) =>{
             </div>
         )
 };
+
+ArticleList.contextTypes={language:PropTypes.object}
 
 export default ArticleList
