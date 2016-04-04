@@ -39,6 +39,7 @@ class Comment extends SimpleStore {
 
                 case LOAD_COMMENTS_PAGE + _SUCCESS:
                     this.total=response.total;
+                    //лучше сохранять для какой страницы загружаешь
                     response.records.filter(i=>!this.getById(i.id)).forEach(this.__add)
                     this.loading=false
                     break;
