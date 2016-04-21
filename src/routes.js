@@ -5,6 +5,7 @@ import Articles from './containers/Articles'
 import ArticlePage from './containers/ArticlePage'
 import CommentsPage from './containers/CommentsPage'
 import FeedPage from './containers/FeedPage'
+import FriendsPage from './containers/FriendsPage'
 import PhotosPage from './containers/PhotosPage'
 import PhotoPage from './containers/PhotoPage'
 import NewArticle from './containers/NewArticle'
@@ -18,6 +19,8 @@ export default (
             </Route>
             <Route path="/comments/:page" component={CommentsPage}/>
             <Route path = "feed" component = {FeedPage} />
+            <Route path = "friends" component = {FriendsPage} />
+            <Route path = "friends/v/" component = {FriendsPage} />
             <Route path = "photos" component = {PhotosPage} />
             <Route path = "/photo/:src" component = {PhotoPage} />
         </Route>

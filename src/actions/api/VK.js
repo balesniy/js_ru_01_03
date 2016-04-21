@@ -20,3 +20,15 @@ export function loadFeedsByPlace(q) {
 export function loadPhotosByQuerry(q) {
     return $.getJSON(`https://api.vk.com/method/photos.search?count=20&q=${q}&callback=?`)
 }
+
+export function loadPhotosByAlbum({owner_id,aid}) {
+    return $.getJSON(`https://api.vk.com/method/photos.get?count=5&owner_id=${owner_id}&album_id=${aid}&callback=?`)
+}
+
+export function loadFriendsList({id}){
+  return $.getJSON(`https://api.vk.com/method/friends.get?user_id=${id}&fields=photo_max,city&callback=?`)
+}
+
+export function loadFriendsIds({id}){
+  return $.getJSON(`https://api.vk.com/method/friends.get?user_id=${id}&callback=?`)
+}

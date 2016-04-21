@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher'
-import {_START,_SUCCESS, LOAD_PHOTOS } from '../actions/constants'
+import {_START,_SUCCESS, LOAD_PHOTOS, LOAD_ALBUM } from '../actions/constants'
 import SimpleStore from './SimpleStore'
 import { loadPhotos } from '../actions/VK.js'
 
@@ -10,7 +10,7 @@ class Photos extends SimpleStore {
         this.total=999;
 
         this.dispatchToken = AppDispatcher.register((action) => {
-            const { type,response } = action
+            const { type,response,data } = action
 
             switch (type) {
 
@@ -23,6 +23,17 @@ class Photos extends SimpleStore {
                     this.resetFeeds()
                     response.response.slice(1).forEach(this.__add)
                     this.loading=false
+                    break;
+
+                case LOAD_ALBUM + _START:
+                    this.getById(data.pid).loading = true
+                    break;
+
+                case LOAD_ALBUM + _SUCCESS:
+                    this.getById(data.pid).loading = false
+                    this.getById(data.pid).loaded = true
+                    this.getById(data.pid).album = response.response
+
                     break;
 
 

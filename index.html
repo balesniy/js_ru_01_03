@@ -9,6 +9,44 @@
     <title>Title</title>
 </head>
 <body>
+  <div id="vk_api_transport"></div>
+  <div id="login_button" onclick="VK.Auth.login((r)=>{
+
+    r.session?console.log({
+          type: 'LOGIN_SUCCES',
+          payload: r.session.user.first_name
+        }):console.log({
+          type: 'LOGIN_FAIL',
+          error: true,
+          payload: new Error('Ошибка авторизации')
+        })
+  },65542)"></div>
+
+<script type="text/javascript">
+  window.vkAsyncInit = function() {
+    VK.init({
+      apiId: 5406559
+    });
+    function authInfo(response) {
+  if (response.session) {
+    console.log('user: '+response.session.mid);
+  } else {
+    console.log('not auth');
+  }
+}
+VK.Auth.getLoginStatus(authInfo);
+    VK.UI.button('login_button');
+  };
+
+  setTimeout(function() {
+    var el = document.createElement("script");
+    el.type = "text/javascript";
+    el.src = "//vk.com/js/api/openapi.js";
+    el.async = true;
+    document.getElementById("vk_api_transport").appendChild(el);
+  }, 0);
+
+</script>
 <div id="container"></div>
 <script src="/static/bundle.js"></script>
 </body>

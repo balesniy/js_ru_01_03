@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import {loadPhotos} from '../actions/VK.js'
+import {loadPhotos, loadAlbum} from '../actions/VK.js'
 import {photosStore}  from '../stores'
 import { Link } from 'react-router'
 
@@ -23,8 +23,7 @@ class PhotosPage extends Component {
 
     feedsChanged =()=>{
         this.setState({
-            feeds:photosStore.getAll(),
-            offset:0
+            feeds:photosStore.getAll()
         })
     }
 
@@ -38,7 +37,7 @@ class PhotosPage extends Component {
     render() {
         return (
             <div>
-                <h2>Feed line</h2>
+                <h2>Photos line</h2>
 
                 <input onChange={this.queryChanged}/>
                 <button onClick={()=>loadPhotos(this.state.query)}>search</button>
@@ -46,22 +45,32 @@ class PhotosPage extends Component {
 
                 <ul>
                     {this.state.feeds.slice(this.state.offset,this.state.offset+5).map(feed=>{
-                        return <li key={feed.pid}>
-                            <h4>{feed.text.split('<br>').map(i=><span>{i.slice(0,80)}<br/></span>).slice(0,3)}</h4>
-                            <Link to={`/photo/${feed.pid}`}><img src={feed.src}/></Link>
+                      const {pid,text,owner_id,aid,src}=feed;
+                        return <li key={pid}>
+                            <h4>{text.split('<br>').map(i=>
+                              <span>{i.slice(0,80)}<br/></span>).slice(0,3)}
+                            </h4>
+                            <Link to={`/photo/${pid}`}><img src={src}/></Link>
+
                             <br/>
-                            User:{feed.user_id}
+                            Owner:{owner_id}
                             <br/>
-                            Owner:{feed.owner_id}
+                            Album:{aid}
                             <br/>
-                            Album:{feed.aid}
+
+                            <button
+                              onClick={()=>loadAlbum({pid,owner_id,aid})}
+                              disabled={feed.loading || feed.loaded}>get album</button>
+                            {feed.loaded?feed.album.map(i=><img key={i.pid} src={i.src}/>):null}
 
                         </li>
                     })}
                 </ul>
-                {this.state.offset>=this.state.feeds.length-5?null:<button
+                {this.state.offset>=this.state.feeds.length-5?null:
+                  <button
                     onClick={()=>this.setState({offset:this.state.offset+5})}>
-                    more feeds...</button>
+                    more feeds...
+                  </button>
                 }
 
             </div>
